@@ -4,11 +4,15 @@ package com.caffeaulait.controller;
 import com.caffeaulait.entities.CommonResult;
 import com.caffeaulait.entities.Payment;
 import com.caffeaulait.service.PaymentService;
+import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/payment")
@@ -16,6 +20,9 @@ import javax.annotation.Resource;
 public class PaymentController {
     @Resource
     private PaymentService paymentService;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
 
     @Value("${server.port}")
     private String serverPort;
@@ -40,5 +47,20 @@ public class PaymentController {
         }else {
             return new CommonResult<Payment>(400, "失败", null);
         }
+    }
+
+    @GetMapping(value = "/discovery")
+    public Object discover() {
+        List<String> services = discoveryClient.getServices();
+        for (String service : services) {
+            log.info("****** service: " + service + " ********");
+        }
+        List<ServiceInstance> serviceInstances =  discoveryClient.getInstances(
+                "CLOUD-PAYMENT-SERVICE");
+        for (ServiceInstance instance : serviceInstances) {
+            log.info(instance.getServiceId() + " " + instance.getHost() + " " +
+                    instance.getPort() + " " + instance.getUri());
+        }
+        return this.discoveryClient;
     }
 }
