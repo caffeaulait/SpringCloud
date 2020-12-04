@@ -1,15 +1,13 @@
 package com.caffeaulait;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-@EnableEurekaClient
-public class Order80 {
-
+@EnableDiscoveryClient
+public class Payment8006 {
     public static void main(String[] args) {
-        SpringApplication.run(Order80.class, args);
+        SpringApplication.run(Payment8006.class, args);
     }
 }

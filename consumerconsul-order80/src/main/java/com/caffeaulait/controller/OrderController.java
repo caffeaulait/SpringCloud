@@ -14,20 +14,14 @@ import javax.annotation.Resource;
 @Slf4j
 public class OrderController {
 
-    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
+    public static final String PAYMENT_URL = "http://consul-provider-payment";
 
     @Resource
     private RestTemplate restTemplate;
 
-    @GetMapping("/consumer/payment/create")
-    public CommonResult<Payment> create(Payment payment) {
-        return restTemplate.postForObject(PAYMENT_URL+"/payment/create",
-                payment, CommonResult.class);
-    }
-
-    @GetMapping("/consumer/payment/get/{id}")
-    public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
-        return restTemplate.getForObject(PAYMENT_URL+"/payment/get/"+id,
-                CommonResult.class);
+    @GetMapping(value = "/payment/consul")
+    public String testConsul() {
+        return  restTemplate.getForObject(PAYMENT_URL+"/payment/zk",
+                String.class);
     }
 }
