@@ -4,7 +4,6 @@ package com.caffeaulait.controller;
 import com.caffeaulait.entities.CommonResult;
 import com.caffeaulait.entities.Payment;
 import com.caffeaulait.service.PaymentService;
-import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -62,5 +61,10 @@ public class PaymentController {
                     instance.getPort() + " " + instance.getUri());
         }
         return this.discoveryClient;
+    }
+
+    @GetMapping(value = "/lb")
+    public String getLB() {
+        return serverPort;
     }
 }
