@@ -18,6 +18,7 @@
     <module>consumer-order80</module>
     <module>provider-payment8006</module>
     <module>consumerconsul-order80</module>
+    <module>consumer-feign-order80</module>
   </modules>
 
   <packaging>pom</packaging>
